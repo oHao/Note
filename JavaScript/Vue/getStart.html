@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://unpkg.com/vue@2.0.1/dist/vue.js"></script>
+
+</head>
+
+<body>
+    <div id="app-1" onclick="app.message = 'clik!!'">
+        {{message}}
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app-1',
+            data: {
+                message: 'Hello Vue!'
+            }
+        })
+    </script>
+    <span>绑定属性--v-bind</span>
+    <div id = "app-2">
+        <span v-bind:title="message">
+            鼠标悬停一段时间查看标题
+        </span>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app-2',
+            data: {
+                message: '这个页面在'+new Date()+'时加载'
+            }
+        })
+    </script>
+    <span>条件判断--v-if</span>
+    <div id="app-3">
+        <span v-if="seen" onclick="app.message='条件为假';app.seen=false">{{message}}</span>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app-3',
+            data: {
+                message:'条件为真',
+                seen: true
+            }
+        })
+    </script>
+    <span>循环--v-for</span>
+    <div id="app-4" onclick="app.todos.push({text : '新增目标'})">
+        <ol>
+            <li v-for="todo in todos">
+                {{todo.text}}
+            </li>
+        </ol>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app-4',
+            data: {
+                todos: [
+                    {text : '目标1'},
+                    {text : '目标2'},
+                    {text : '目标3'}
+                ]
+            }
+        })
+    </script>
+    <span>点击事件--v-on:click</span>
+    <div id="app-5">
+        <p>{{message}}</p>
+        <button v-on:click="reverse">字符反转</button>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app-5',
+            data: {
+                message: 'Hello Vue!'
+            },
+            methods: {
+                reverse: function () {
+                    this.message = this.message.split('').reverse().join("");
+                }
+            }
+        })
+    </script>
+    <span>v-model</span>
+    <div id="app-6">
+        <p>{{message}}</p>
+        <input v-model="message">
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app-6',
+            data: {
+                message: 'Hello Vue!'
+            }
+        })
+
+    </script>
+    <span>组件</span>
+    <div id="app-7">
+        <ol>
+            <todo-item
+                    v-for="todo in todos"
+                    v-bind:todo="todo"
+                    v-bind:key="todo.id"
+            ></todo-item>
+        </ol>
+    </div>
+    <script>
+        Vue.component('todo-item',{
+            props: ['todo'],
+            template: '<li>{{todo.text}}</li>'
+        })
+        var app = new Vue({
+            el: '#app-7',
+            data: {
+                todos: [
+                    {id:3,text : '目标1'},
+                    {id:1,text : '目标2'},
+                    {id:2,text : '目标3'}
+                ]
+            }
+        })
+    </script>
+</body>
+</html>
